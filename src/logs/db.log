@@ -1,3 +1,0 @@
-[01.12.2011 05:59:20] Opening db/jobs.db database..
-[01.12.2011 05:59:20] db/jobs.db: table "jobs" does not exist. Creating table "jobs", fields: id INTEGER PRIMARY KEY,time INTEGER,receiver TEXT,msg TEXT ..
-[01.12.2011 05:59:33] Opening db/jobs.db database..
