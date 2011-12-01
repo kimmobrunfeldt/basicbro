@@ -3,12 +3,7 @@
 #
 
 
-
 """
-License: MIT, read more: http://www.opensource.org/licenses/mit-license.php
-Author: Kimmo Brunfeldt.
-Modified: 22.10.2011
-
 Module to allow remote connections to bot.
 
 

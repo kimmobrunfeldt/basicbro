@@ -4,8 +4,6 @@
 
 # License: CC BY-SA 3.0, http://creativecommons.org/licenses/by-sa/3.0/
 # Author: Kimmo Brunfeldt
-# 2011
-
 
 # Python default modules
 import ConfigParser
