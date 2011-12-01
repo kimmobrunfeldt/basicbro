@@ -26,7 +26,7 @@ if gevent.__version__ < '0.13':
     sys.exit()
     
 
-# PerusBot's modules
+# BroBot's modules
 import mr_server
 import logger
 import events
@@ -41,7 +41,7 @@ class IrcNullMessage(Exception):
     pass
 
 
-class PerusBot(object):
+class BroBot(object):
     """
     Modular irc bot which has integrated scheduling system, and backdoor server.
     """
@@ -285,7 +285,7 @@ if __name__ == '__main__':
             print('Creating db directory..')
             os.makedirs('db')
         
-        bot = PerusBot(settings, variables) # Start bot
+        bot = BroBot(settings, variables) # Start bot
 
         tm = start_timer(bot) # Start timer.
         bot.timer = tm # Now bot can add jobs
