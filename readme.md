@@ -1,7 +1,7 @@
 When developing new stuff to this bot, search HOWTO section below.
 
 
-The basic functionality of irc bot. Hilights:
+The basic functionality of IRC bot. Hilights:
 
     - Uses gevent, co-routine based Python networking library,
       http://www.gevent.org/
