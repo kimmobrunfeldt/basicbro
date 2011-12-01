@@ -278,9 +278,11 @@ if __name__ == '__main__':
 
         # Create logs and db directories.
         if not os.path.isdir('logs'):
+            print('Creating logs directory..')
             os.makedirs('logs')
     
         if not os.path.isdir('db'):
+            print('Creating db directory..')
             os.makedirs('db')
         
         bot = PerusBot(settings, variables) # Start bot
