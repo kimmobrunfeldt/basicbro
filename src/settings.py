@@ -55,5 +55,5 @@ variables['bot_debug'] = 'true' # Debuggind mode
 variables['bot_say_title'] = 'true' # Say title: x on every link
 # %n = nick , %m = message
 variables['mr_webirc_stamp'] = u'<webirc, %n>: %m'
-
+variables['gcalc_legal'] = " +-*/()!^'"
 
