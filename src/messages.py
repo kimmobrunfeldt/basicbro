@@ -3,6 +3,7 @@
 #
 
 import useful
+import re
 
 class MessageHandler(object):
     """
@@ -17,17 +18,19 @@ class MessageHandler(object):
         
         nick = prefix.split('!')[0]
         recv = args[0]
-        words = args[1:]
+        line = args[1]
 
-        for word in words:
-            
-            # A link was said.
-            if word.startswith('http://') and self.bot.vars['bot_say_title'] == 'true':
+        url_regex = re.compile(r"""https?://[^'"<>\s]+""")
+
+        if self.bot.vars['bot_say_title'] == 'true':
+
+            for match in re.findall(url_regex, line):
+            	print(match)
                 
-                title = useful.get_title(word)
+                title = useful.get_title(match)
 
                 # Dont print groovesharks ad text                
-                if u'grooveshark.com' in word.lower():
+                if u'grooveshark.com' in match.lower():
                     title = title = title.split('|')[0]
                 
                 # get_title() gives empty string if title was not found.
