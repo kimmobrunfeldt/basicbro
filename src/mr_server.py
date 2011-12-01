@@ -256,7 +256,7 @@ class MrServer(object):
         # [1-50]
         regex = re.compile('^.{1,50}$')
 
-        if regex.match(words) == None:
+        if regex.match(words) is None:
             self.send(obj, msgs['211'])
             return
 
@@ -292,7 +292,7 @@ class MrServer(object):
         # [1-20]   [1-20]  *
         regex = re.compile('^.{1,50} .{1,20} .{1,500}$')
 
-        if regex.match(words) == None:
+        if regex.match(words) is None:
             self.send(obj, msgs['205'])
             return
 
@@ -369,7 +369,7 @@ class MrServer(object):
         # [1-15]^[a-zA-Z0-9_]*
         regex = re.compile('^[a-zA-Z0-9]{1,15}$')
         
-        if regex.match(words) == None:
+        if regex.match(words) is None:
             self.send(obj, msgs['206'])
             return
             

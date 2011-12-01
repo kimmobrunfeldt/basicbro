@@ -113,6 +113,6 @@ HOWTO:
         - Check function start_timer() in bot.py to see how new timers are added.
     
     - Using logger: (logger.py)
-        - Check PerusBot in bot.py, method __init__ and look how it sets up its
+        - Check BroBot class in bot.py, method __init__ and look how it sets up its
           logger, the same way, you could add a new log.
     
