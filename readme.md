@@ -2,7 +2,7 @@
 
 - Clone repository to your computer:
 
-     $ git clone git://github.com/kimbledon/basicbro.git
+     `$ git clone git://github.com/kimbledon/basicbro.git`
 
 or download zip file provided by github and extract it.
 
@@ -10,7 +10,7 @@ or download zip file provided by github and extract it.
 
 - Run script
 
-     $ python bot.py
+     `$ python bot.py`
 
 # FUNCTIONALITY
 
