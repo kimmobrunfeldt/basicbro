@@ -22,13 +22,14 @@ class MessageHandler(object):
         for word in words:
             
             # A link was said.
-            if word[0:7] == 'http://' and self.bot.vars['bot_say_title'] == 'true':
+            if word.startswith('http://') and self.bot.vars['bot_say_title'] == 'true':
                 
                 title = useful.get_title(word)
-                
-                
+
+                # Dont print groovesharks ad text                
                 if u'grooveshark.com' in word.lower():
                     title = title = title.split('|')[0]
                 
-                if len(title) > 0:
+                # get_title() gives empty string if title was not found.
+                if len(title):
                     self.bot.send_msg(recv, 'title: %s'%title)

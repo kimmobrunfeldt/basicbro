@@ -29,7 +29,7 @@ class Command(object):
 
         regex = re.compile(r'^!c .+$')
         
-        if regex.match(wordsline) == None: # Hit!
+        if regex.match(wordsline) is None:
             self.bot.send_msg(out, self.help_syntax)
             return
         
@@ -39,7 +39,7 @@ class Command(object):
         reg = r'^[a-zA-Z0-9' + re.escape(legal) + r']+$'
         regex = re.compile(reg)
         
-        if regex.match(expr) == None: # Hit!
+        if regex.match(expr) is None:
             self.bot.send_msg(out, "Operation can contain only a-z, A-Z, 0-9 and following characters: \"%s\""%legal)
             return
         
@@ -80,29 +80,17 @@ class Command(object):
             oper = answer['lhs'] # Operation as understood
             result = answer['rhs'] # Result of calculation
             
-            print repr(oper)
-            print repr(result)
-            
             # Change it to unicode.
             oper = useful.uni(oper)
             result = useful.uni(result)
-            
-            print repr(oper)
-            print repr(result)
             
             # &#215; etc to corretcans
             oper = useful.unescape(oper)
             result = useful.unescape(result)
 
-            print repr(oper)
-            print repr(result)
-
             # <sup>35</sup> -> ³⁵
             oper = useful.sup(oper)
             result = useful.sup(result)
-
-            print repr(oper)
-            print repr(result)
 
             # lhs = understood input
             # rhs = answer

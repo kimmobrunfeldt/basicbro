@@ -103,13 +103,5 @@ class DbHandler(object):
         
         # Return all jobs.
         return [job for job in self.cursor.execute(sql_cmd)]
-        
-
-
-"""                
-                tmpstr = ''
-                for field in self.fields:
-
-                    if useful.is_number(field):
-"""                                
+                 
         

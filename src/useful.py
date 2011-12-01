@@ -172,14 +172,6 @@ def sha256_hex(data):
     else:
         return hashlib.sha256(data).hexdigest()
         
-
-def is_number(data):
-    """Test if data is number"""
-    try:
-        float(data)
-        return True
-    except ValueError:
-        return False
     
     
     

@@ -227,7 +227,7 @@ class PerusBot(object):
                 # Check if line matched to commands syntax.                
                 for pattern, func in self.cmd_dict.items():
                     
-                    if pattern.match(args[1]) != None: # Hit!
+                    if pattern.match(args[1]) is not None: # Hit!
                     
                         # Pass a nick or channel to command function.
                         if args[0].lower() == self.sets['bot_nick'].lower():
