@@ -14,14 +14,11 @@ from gevent import monkey
 monkey.patch_all()
 
 class Command(object):
-    """
-    Gives age when birth year is given.
-    """
     
     def __init__(self, bot):
         
-        self.use_limit = 5
-        self.last_used = 0
+        self.use_limit = 5  # In seconds.
+        self.last_used = 0  # Unixtime when command was last time used.
         self.bot = bot
         self.syntax = re.compile(r'^!c')
         self.command = u'c' # in lower without !
