@@ -5,5 +5,5 @@ setup(
     version='0.1',
     packages=['basicbro',],
     license='',
-    long_description=open('README.md').read(),
+    long_description=open('readme.md').read(),
 )
