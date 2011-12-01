@@ -1,16 +1,16 @@
 # INSTALLING:
 
-1. Clone repository to your computer:
+- Clone repository to your computer:
 
-    $ git clone git://github.com/kimbledon/basicbro.git
+     $ git clone git://github.com/kimbledon/basicbro.git
 
 or download zip file provided by github and extract it.
 
-2. Modify settings.py to your needs.
+- Modify settings.py to your needs.
 
-3. Run script
+- Run script
 
-    $ python bot.py
+     $ python bot.py
 
 # FUNCTIONALITY
 
