@@ -76,7 +76,7 @@ WEBMSG [receiver] [sender] [message]
     Replys: 003, 204, 208, 209, 205
     
     
-    e.g WEBMSG #luola kimbledon Tää on mun viesti, snadi ...\r\n
+    e.g WEBMSG #luola kimbledon Example message to be sent to #luola-channel\r\n
 """
 
 

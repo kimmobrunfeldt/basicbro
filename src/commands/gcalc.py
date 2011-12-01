@@ -108,7 +108,6 @@ class Command(object):
             else:
                 raise
             
-            
         if len(answer['error']) > 0:
             self.bot.send_msg(out, "Operation was not understood.")
             return
