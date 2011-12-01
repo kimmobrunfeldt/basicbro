@@ -12,6 +12,7 @@ settings['bot_port'] = 6667
 settings['bot_channels'] = ['#luola']
 settings['bot_nick'] = 'perusbro'
 settings['bot_realname'] = 'Perus Bro'
+# Use logs directory, if you change, check bot.py bottom
 settings['bot_logfile'] = 'logs/bot'
 settings['bot_timeout'] = 220 # Receiving socket's timeout.
 settings['bot_reconnect_interval'] = 10
@@ -26,12 +27,14 @@ settings['bot_alter_ending'] = 'u'
 """
 TIMER SETTINGS
 """
+# Use db directory, if you change, check bot.py bottom
 settings['timer_db_file'] = 'db/jobs.db'
 settings['timer_logfile'] = 'logs/timer'
 
 """
 DB SETTINGS
 """
+# Use logs directory, if you change, check bot.py bottom
 settings['db_logfile'] = 'logs/db'
 
 """
@@ -42,6 +45,8 @@ MRSERVER SETTINGS
 settings['mr_password'] = '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'
 settings['mr_port'] = 48827 # Port to listen
 settings['mr_host'] = 'localhost' # Accept connections only from localhost!
+
+# Use logs directory, if you change, check bot.py bottom
 settings['mr_logfile'] = 'logs/mr'
 
 
@@ -56,4 +61,5 @@ variables['bot_say_title'] = 'true' # Say title: x on every link
 # %n = nick , %m = message
 variables['mr_webirc_stamp'] = u'<webirc, %n>: %m'
 variables['gcalc_legal'] = " +-*/()!^'"
+
 

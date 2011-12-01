@@ -12,6 +12,7 @@ import ConfigParser
 import traceback
 import sys
 import time
+import os
 
 # Gevent modules
 import gevent
@@ -274,6 +275,14 @@ if __name__ == '__main__':
     from settings import *
     
     try:
+
+        # Create logs and db directories.
+        if not os.path.isdir('logs'):
+            os.makedirs('logs')
+    
+        if not os.path.isdir('db'):
+            os.makedirs('db')
+        
         bot = PerusBot(settings, variables) # Start bot
 
         tm = start_timer(bot) # Start timer.
