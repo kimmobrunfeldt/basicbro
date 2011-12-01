@@ -1,1 +1,0 @@
-/home/kimble/koodit/python/PerusBot/__init__.py
