@@ -1,8 +1,8 @@
-INSTALLING:
+# INSTALLING:
 
 1. Clone repository to your computer:
 
-$ git clone git://github.com/kimbledon/basicbro.git
+    $ git clone git://github.com/kimbledon/basicbro.git
 
 or download zip file provided by github and extract it.
 
@@ -10,9 +10,9 @@ or download zip file provided by github and extract it.
 
 3. Run script
 
-$ python bot.py
+    $ python bot.py
 
-The basic functionality of IRC bot. Hilights:
+# FUNCTIONALITY
 
     - Uses gevent, co-routine based Python networking library,
       http://www.gevent.org/
@@ -51,7 +51,7 @@ The basic functionality of IRC bot. Hilights:
       controls this option.
 
 
-NOTES:
+# NOTES
 
     - Bot keeps track of people in channels, but channelnames are ALWAYS
       lowercase, the are never casesensitive, remember when coding. Also it is
@@ -61,7 +61,7 @@ NOTES:
       It is difficult to find if you don't know it.
 
 
-MODULES:
+# MODULES:
 
     - logger, has 2 kinds of log messages: errors and info.
       for every separate greenlet(thread) there is own logfile(bot, timer, MR).
@@ -84,7 +84,7 @@ MODULES:
     - tcp, most of socket-level stuff happens in this module. The connection
       stuff is separated from the actual bot to make the main bot code shorter.
       
-HOWTO:
+# HOWTO:
 
     - Adding new command:
         - Create new file to commands directory, look other commands for an 
