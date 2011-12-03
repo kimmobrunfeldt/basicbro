@@ -186,7 +186,7 @@ class IrcEvents(object):
         if nick.lower() == self.bot.sets['bot_orig_nick'].lower():
             self.bot.send('NICK %s'% self.bot.sets['bot_orig_nick'])
                     
-        print self.bot.nicklist
+        # print self.bot.nicklist
         
     def part(self, prefix, cmd, args):
         """Person parts channel."""
@@ -202,7 +202,7 @@ class IrcEvents(object):
             
             self.bot.sets['bot_channels'].remove(channel)
             
-        print self.bot.nicklist
+        # print self.bot.nicklist
         
     def join(self, prefix, cmd, args):
         """Person joins."""    
@@ -224,7 +224,7 @@ class IrcEvents(object):
         else:
             self.bot.nicklist[channel][nick.lower()] = nick
         
-        print self.bot.nicklist
+        # print self.bot.nicklist
         
     def nick(self, prefix, cmd, args):
         """Person changes nick."""
@@ -243,7 +243,7 @@ class IrcEvents(object):
                 self.bot.nicklist[channel][new_nick.lower()] = new_nick 
                 
                 
-        print self.bot.nicklist
+        # print self.bot.nicklist
                 
     def invite(self, prefix, cmd, args):
         """Someone was invited to a channel."""
@@ -259,7 +259,7 @@ class IrcEvents(object):
             self.bot.nicklist[channel] = {} # Create channel to memory.
             self.bot.send('WHO %s'% channel) # Get the users from channel.
             
-            print self.bot.nicklist
+            # print self.bot.nicklist
             
     def kick(self, prefix, cmd, args):
         """Remove channel from settings when kicked"""
@@ -277,7 +277,7 @@ class IrcEvents(object):
         else:
             del self.bot.nicklist[channel][kicked_nick.lower()]
         
-        print self.bot.nicklist
+        # print self.bot.nicklist
         
     def rpl_whoreply(self, prefix, cmd, args):
         """Server sent reply to WHO command"""
@@ -285,7 +285,7 @@ class IrcEvents(object):
         #                                         0          1         2               3                       4          5      6           7
         #:servercentral.il.us.quakenet.org 352 perusbro #perusprot ~kimble kimblee-.users.quakenet.org *.quakenet.org kimbledon H@x :3 Kimmo Brunfeldt
         
-        print args
+        # print args
         channel = args[1].lower()
         nick = args[5]
         
@@ -296,7 +296,7 @@ class IrcEvents(object):
         else:
             self.bot.nicklist[channel][nick.lower()] = nick 
         
-        print self.bot.nicklist
+        # print self.bot.nicklist
         
         
     def rpl_welcome(self, prefix, cmd, args):
