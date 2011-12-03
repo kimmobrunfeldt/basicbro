@@ -88,11 +88,6 @@ class Tcp(object):
         self.bot.log.info('Killing recv- and sendloops..')
         gevent.killall(self.loops)
         
-    def reconnect(self):
-        self.bot.log.info('Reconnecting..')
-        self.disconnect()
-        self.connect()
-    
     def _recv_loop(self):
         """
         Receive lines from server
