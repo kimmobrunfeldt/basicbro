@@ -144,12 +144,10 @@ def get_http(url, timeout=3, data=35536):
         print e
         return u''
     
-    # If page is smaller than we read.
+    # For example iframe redirect
     except httplib.IncompleteRead, e:
-        
-        # Read all bytes.
-        page = ''.join(urllib2.urlopen(req, timeout=timeout).read())
-        return page
+        print e
+        return u''
 
     # This should never be raised. It is raised when url is "sdag" not "http://x"
     except ValueError,e:
