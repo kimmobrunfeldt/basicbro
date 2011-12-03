@@ -143,6 +143,11 @@ def get_http(url, timeout=3, data=35536):
     except httplib.InvalidURL,e: 
         print e
         return u''
+    
+    # If page is smaller than we read.
+    except httplib.IncompleteRead, e:
+        print e
+        return u''
 
     # This should never be raised. It is raised when url is "sdag" not "http://x"
     except ValueError,e:
