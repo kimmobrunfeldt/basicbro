@@ -75,6 +75,7 @@ class Tcp(object):
         try:
             self.loops = [gevent.spawn(self._recv_loop), gevent.spawn(self._send_loop)]
             gevent.joinall(self.loops)
+                                    
         finally:
             gevent.killall(self.loops)
         
@@ -82,11 +83,11 @@ class Tcp(object):
         """Disconnect from server."""
         self._socket.close()
         self.bot.sets['bot_connected'] = False
+        self.end_loops = True
     
     def reconnect(self):
         self.bot.log.info('Reconnecting..')
         self.disconnect()
-        self.end_loops = True
         self.connect()
     
     def _recv_loop(self):
@@ -119,7 +120,7 @@ class Tcp(object):
         while not self.end_loops: # Split long messages to smaller
         
             line = self.oqueue.get().splitlines()[0][:500]
-            print line
+            
             self._obuffer += line + '\r\n'
             while self._obuffer:
                 sent = self._socket.send(self._obuffer)
