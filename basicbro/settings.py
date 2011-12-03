@@ -9,9 +9,9 @@ BOT SETTINGS
 settings = {}
 settings['bot_server'] = 'irc.freenode.org'
 settings['bot_port'] = 6667
-settings['bot_channels'] = ['#luola']
-settings['bot_nick'] = 'perusbro'
-settings['bot_realname'] = 'Perus Bro'
+settings['bot_channels'] = ['#yourchannel']
+settings['bot_nick'] = 'basicbro'
+settings['bot_realname'] = 'Basic Bro'
 # Use logs directory, if you change, check bot.py bottom
 settings['bot_logfile'] = 'logs/bot'
 settings['bot_timeout'] = 220 # Receiving socket's timeout.
@@ -23,6 +23,7 @@ settings['bot_tm_zone'] = 3600 * 3 # Europe/Helsinki, added to time()
 settings['bot_max_line_length'] = 150
 # If default nick is already in use, add this to the default nick.
 settings['bot_alter_ending'] = 'u'
+settings['bot_reconnect_delay_on_error'] = 20
 
 """
 TIMER SETTINGS
@@ -61,5 +62,3 @@ variables['bot_say_title'] = 'true' # Say title: x on every link
 # %n = nick , %m = message
 variables['mr_webirc_stamp'] = u'<webirc, %n>: %m'
 variables['gcalc_legal'] = " +-*/()!^'"
-
-
