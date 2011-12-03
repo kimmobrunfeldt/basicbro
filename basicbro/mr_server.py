@@ -166,7 +166,13 @@ class MrServer(object):
         while True:
         
             # Read received line, make it unicode, expecting utf-8 or iso-8859-1
-            line = fileobj.readline()
+            try:
+                line = fileobj.readline()
+            
+            except Exception, e:
+                self.log.info(e)
+                self.log.info("Disconnecting session.")
+                break
             
             if not line:
                 self.log.info("Client disconnected.")
