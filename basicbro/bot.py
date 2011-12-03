@@ -153,17 +153,24 @@ class IrcBot(object):
         """Disconnect from server."""
         self.conn.disconnect()
         
-    def reconnect(self):
+    def reconnect(self, delay=0):
         """Reconnect to server."""
-        self.send('QUIT :Reconnecting')
-        gevent.sleep(1)
-        self.conn.reconnect()
+        
+        if self.sets['bot_connected']:
+            self.send('QUIT :Reconnecting')
+            gevent.sleep(1)
+        
+        self.conn.disconnect()
+        self.log.info(u'Disconnected. Reconnecting in %s seconds..'% delay)
+        gevent.sleep(delay)
+        gevent.spawn(self.conn.connect)
         
     def quit(self):
         """Quit properly from server."""
         self.log.info('Quitting..')
-        self.send('QUIT :%s'% self.sets['bot_quit_message'])
-        gevent.sleep(1)
+        if self.sets['bot_connected']:
+            self.send('QUIT :%s'% self.sets['bot_quit_message'])
+            gevent.sleep(1)
         self.conn.disconnect()
 
     def parsemsg(self, s):
@@ -213,7 +220,7 @@ class IrcBot(object):
             
             prefix, command, args = self.parsemsg(line)
 
-            #print('< %s'% line)
+            # print('< %s'% line) this is printed in tcp rec loop.
             
             # Handle events in events.py
             if command in self.events.event_dict.keys():
@@ -245,8 +252,7 @@ class IrcBot(object):
             
             if command == 'ERROR':
                 self.log.error([u'Error when connecting:', line])
-                self.log.info(u'Quitting..')
-                self.quit()
+                self.reconnect(delay=self.sets['bot_reconnect_delay_on_error'])
             
 
 def start_timer(bot):
