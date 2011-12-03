@@ -84,7 +84,10 @@ class Tcp(object):
         self._socket.close()
         self.bot.sets['bot_connected'] = False
         self.end_loops = True
-    
+        
+        self.bot.log.info('Killing recv- and sendloops..')
+        gevent.killall(self.loops)
+        
     def reconnect(self):
         self.bot.log.info('Reconnecting..')
         self.disconnect()
@@ -94,10 +97,9 @@ class Tcp(object):
         """
         Receive lines from server
         """
-        
+        self.bot.log.info('Recvloop started.')
         self.end_loops = False
         while not self.end_loops:
-        
             try:
                 data = self._socket.recv(4096)
             except socket.timeout:
@@ -111,19 +113,22 @@ class Tcp(object):
             while '\r\n' in self._ibuffer: # Split long data to chunks
                 line, self._ibuffer = self._ibuffer.split('\r\n', 1)
                 self.iqueue.put(line)
+                print('< %s'% line)
     
     def _send_loop(self):
         """
         Send lines to server
         """
+        self.bot.log.info('Sendloop started.')
         self.end_loops = False
         while not self.end_loops: # Split long messages to smaller
         
             line = self.oqueue.get().splitlines()[0][:500]
             
+            print('> %s'% line)
+            
             self._obuffer += line + '\r\n'
             while self._obuffer:
                 sent = self._socket.send(self._obuffer)
                 self._obuffer = self._obuffer[sent:]
-            
             
