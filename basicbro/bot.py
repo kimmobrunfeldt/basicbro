@@ -251,8 +251,9 @@ class IrcBot(object):
                 self.send('PONG :%s'% args[0])
             
             if command == 'ERROR':
-                self.log.error([u'Error when connecting:', line])
-                self.reconnect(delay=self.sets['bot_reconnect_delay_on_error'])
+                if not line.startswith('ERROR :Closing Link'):
+                    self.log.error([u'Error when connecting:', line])
+                    self.reconnect(delay=self.sets['bot_reconnect_delay_on_error'])
             
 
 def start_timer(bot):
