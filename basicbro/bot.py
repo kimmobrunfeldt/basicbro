@@ -96,7 +96,7 @@ class IrcBot(object):
         max_len = self.sets['bot_max_line_length']
         
         # Split over-long lines to parts!
-        if len(line) > self.sets['bot_max_line_length']:
+        if len(line) > max_len:
             
             buf = line
             
