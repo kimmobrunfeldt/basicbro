@@ -161,7 +161,13 @@ class IrcBot(object):
             gevent.sleep(1)
         
         self.conn.disconnect()
-        self.log.info(u'Disconnected. Reconnecting in %s seconds..'% delay)
+        
+        if delay > 0:
+            self.log.info(u'Disconnected. Reconnecting in %s seconds..'% delay)
+        
+        else:
+            self.log.info(u'Disconnected. Reconnecting..')
+            
         gevent.sleep(delay)
         gevent.spawn(self.conn.connect)
         
