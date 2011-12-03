@@ -77,6 +77,13 @@ WEBMSG [receiver] [sender] [message]
     
     
     e.g WEBMSG #luola kimbledon Example message to be sent to #luola-channel\r\n
+    
+    
+RECONNECT
+
+    Reconnects bot.
+    
+    e.g RECONNECT
 """
 
 
@@ -129,6 +136,7 @@ class MrServer(object):
                     'raw': self.raw,
                     'newnick': self.newnick,
                     'nicklist': self.nicklist,
+                    'reconnect': self.reconnect,
                     }
         
         self.log = logger.Logger('MrServer',bot.sets['mr_logfile'])
@@ -376,5 +384,15 @@ class MrServer(object):
         self.bot.send(u'NICK %s'% nick)
         self.send(obj, msgs['003']) # OK.
         self.log.info("NEWNICK: %s"%nick)
+        return
+
+    def reconnect(self, obj, words):
+        """Bot reconnects"""
+
+        if not self.bot.sets['bot_connected']:
+            self.send(obj, msgs['208']) # OK.
+            return
+        
+        self.bot.reconnect()
         return
 
