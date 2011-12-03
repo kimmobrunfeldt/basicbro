@@ -320,7 +320,7 @@ class IrcEvents(object):
         """Nick that bot tried to set was already in use"""
         
         tried_nick = args[1]
-        self.bot.log('%s nick was already in use.'% tried_nick)
+        self.bot.log.info('%s nick was already in use.'% tried_nick)
         
         orig = self.bot.sets['bot_orig_nick'] # Bots original nick
         alter = self.bot.sets['bot_alter_nick'] # Bots alternick
@@ -331,6 +331,6 @@ class IrcEvents(object):
             self.bot.sets['bot_nick'] = self.bot.sets['bot_nick'] + self.bot.sets['bot_alter_ending']
             
             self.bot.send('NICK %s'% self.bot.sets['bot_nick'])
-            self.bot.log('Using nick %s.'% alter)
+            self.bot.log.info('Using nick %s.'% alter)
             
 
