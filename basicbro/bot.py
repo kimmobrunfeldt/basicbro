@@ -22,7 +22,6 @@ from gevent.pool import Pool
 if gevent.__version__ < '0.13':
     print('Too old gevent version! Must be >=0.13')
     sys.exit()
-    
 
 # BroBot's modules
 import mr_server
@@ -39,9 +38,9 @@ class IrcNullMessage(Exception):
     pass
 
 
-class BroBot(object):
+class IrcBot(object):
     """
-    Modular irc bot which has integrated scheduling system, and backdoor server.
+    Modular IRC bot which has integrated scheduling system, and backdoor server.
     """
     def __init__(self, settings, variables):
         
@@ -54,7 +53,7 @@ class BroBot(object):
         # Add commands to a dictionary, structure is:
         # cmd_dict = { <re patterobject>: <function command> }
         self.cmd_dict = {}
-        self.bot_cmds = {} # This is for !help.
+        self.bot_cmds = {}  # This is for !help.
 
         for item in commands.__all__:
             
@@ -64,7 +63,6 @@ class BroBot(object):
             self.bot_cmds[obj.command]['desc'] = obj.help_desc
             self.bot_cmds[obj.command]['syntax'] = obj.help_syntax
             
-        
         self.lines = queue.Queue()
         
         # Settings are "immutable". They are meant to be variables that can be
@@ -109,7 +107,7 @@ class BroBot(object):
                 
                 self.log.info('Sent message: %s "%s"'% (receiver, line) )
                 self.send('PRIVMSG %s :%s'% (receiver, line) )
-                gevent.sleep(0.5) # Prevent excess flood.
+                gevent.sleep(0.5)  # Prevent excess flood.
        
         else:
             self.log.info('Sent message: %s "%s"'% (receiver, line) )
@@ -121,6 +119,7 @@ class BroBot(object):
         encoding = self.sets['bot_encoding_out']
         try:
             line = line.encode(encoding)
+            #logger.printbold('> %s'% line)
             
         except UnicodeEncodeError:
             self.log.error(['send() was unable to encode(%s) a line:'% encoding,
@@ -134,7 +133,7 @@ class BroBot(object):
         
     def connect(self):
         """
-        Connect irc bot to server, the raw socket controls are called in
+        Connect IRC bot to server, the raw socket controls are called in
         tcp.py.
         """
         self.conn = self.create_connection()
@@ -156,12 +155,15 @@ class BroBot(object):
         
     def reconnect(self):
         """Reconnect to server."""
+        self.send('QUIT :Reconnecting')
+        gevent.sleep(1)
         self.conn.reconnect()
         
-    def quit(self, msg=None):
+    def quit(self):
         """Quit properly from server."""
         self.log.info('Quitting..')
         self.send('QUIT :%s'% self.sets['bot_quit_message'])
+        gevent.sleep(1)
         self.conn.disconnect()
 
     def parsemsg(self, s):
@@ -206,12 +208,12 @@ class BroBot(object):
                     line = line.decode('iso-8859-1')
 
                 except UnicodeDecodeError: # It was not iso-8859-1 encoded
-                    self.log.error(['Unable to decode a line! Line was:',
+                    self.log.error([u'Unable to decode a line! Line was:',
                                     line])
             
             prefix, command, args = self.parsemsg(line)
 
-            print(line)
+            #print('< %s'% line)
             
             # Handle events in events.py
             if command in self.events.event_dict.keys():
@@ -241,6 +243,11 @@ class BroBot(object):
             if command == 'PING': 
                 self.send('PONG :%s'% args[0])
             
+            if command == 'ERROR':
+                self.log.error([u'Error when connecting:', line])
+                self.log.info(u'Quitting..')
+                self.quit()
+            
 
 def start_timer(bot):
     """Set up schedule service for bot"""
@@ -251,13 +258,13 @@ def start_timer(bot):
     tm.add_repeat(bot.sets['bot_ping_interval'], bot.send_ping, [])
     
     tm.log.info('Starting Timer..')
-    tm.start() # Start timer
+    tm.start()
     return tm
 
 
 def start_mr(bot):
     """Set up MrServer."""
-    mr = mr_server.MrServer(bot) # Start mr server
+    mr = mr_server.MrServer(bot)
     
     listener = (settings['mr_host'], settings['mr_port'])
     server = StreamServer(listener, mr.parser)
@@ -283,14 +290,14 @@ if __name__ == '__main__':
             print('Creating db directory..')
             os.makedirs('db')
         
-        bot = BroBot(settings, variables) # Start bot
+        bot = IrcBot(settings, variables)
 
         tm = start_timer(bot) # Start timer.
         bot.timer = tm # Now bot can add jobs
         
-        mr, server = start_mr(bot) # Start MrServer    
+        mr, server = start_mr(bot)
         
-        bot.connect() # Start the bot
+        bot.connect()
         
         
     except KeyboardInterrupt:
