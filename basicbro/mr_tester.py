@@ -22,4 +22,9 @@ a.send('nicklist #channel\r\n')
 # Quit
 a.send('quit\r\n')
 
+while 1:
+    data = a.recv(1024)
+    print data
+    if not data: break
+
 a.close() # Close socket
