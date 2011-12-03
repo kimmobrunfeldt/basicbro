@@ -17,7 +17,7 @@ a.send('auth password\r\n')
 a.send('webmsg #channel sender UTF-8 TEST: Č Ě Ď Ň Ř Ů Ĺ, Also split line test: '+ 'a'*120 + '012345678901234567890' + '\r\n')
 
 # Test nicklisting for #channel
-a.send('nicklist #channel')
+a.send('nicklist #channel\r\n')
 
 # Quit
 a.send('quit\r\n')
