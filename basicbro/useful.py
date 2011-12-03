@@ -146,8 +146,10 @@ def get_http(url, timeout=3, data=35536):
     
     # If page is smaller than we read.
     except httplib.IncompleteRead, e:
-        print e
-        return u''
+        
+        # Read all bytes.
+        page = ''.join(urllib2.urlopen(req, timeout=timeout).read())
+        return page
 
     # This should never be raised. It is raised when url is "sdag" not "http://x"
     except ValueError,e:
