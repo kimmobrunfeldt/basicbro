@@ -42,7 +42,7 @@ class Logger(object):
         """
         
         try:
-            line = line.encode(self.encoding)
+            line = str(line).encode(self.encoding)
             
         except UnicodeEncodeError:
             printred('Logger.info() was unable to encode(%s) a line:'% self.encoding)
@@ -74,7 +74,7 @@ class Logger(object):
         """
         
         try:
-            lines = map(lambda x: x.encode(self.encoding), lines)
+            lines = map(lambda x: str(x).encode(self.encoding), lines)
             
         except UnicodeEncodeError:
             printred('Logger.error() was unable to encode(%s) a line:'% self.encoding)
