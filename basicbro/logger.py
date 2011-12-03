@@ -74,11 +74,11 @@ class Logger(object):
         """
         
         try:
-            line = line.encode(self.encoding)
+            lines = map(lambda x: x.encode(self.encoding), lines)
             
         except UnicodeEncodeError:
-            printred('Logger.info() was unable to encode(%s) a line:'% self.encoding)
-            printred(line)
+            printred('Logger.error() was unable to encode(%s) a line:'% self.encoding)
+            printred('\n'.join(lines))
             return
                         
         timestamp = time.strftime('[%d.%m.%Y %H:%M:%S]')
@@ -91,7 +91,7 @@ class Logger(object):
         
         # Write fancy "--------[timestamp]----------" kind of thing
         f.write(('-' * 20) + timestamp + ('-' * 20) + '\n')
-        printbold(('-' * 20) + timestamp + '[%s]'% self.logname + ('-' * 20))
+        printbold(('-' * 20) + timestamp + ('-' * 20))
         
         # Go through lines to be logged
         for line in lines:
@@ -110,8 +110,7 @@ class Logger(object):
         
 if __name__ == '__main__':
     
-    log = Logger('LOGTESTER')
-    
+    log = Logger('LG','LOGTESTER')
     
     log.info('Testing..')
     log.error(['Line1','Line2'])
