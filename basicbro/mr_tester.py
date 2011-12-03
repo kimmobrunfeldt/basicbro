@@ -8,7 +8,7 @@ import socket
 
 a = socket.socket()
 
-a.connect(('127.0.0.1', 4887))
+a.connect(('127.0.0.1', 48827))
 
 # THIS IS EXAMPLE PASSWORD!
 a.send('auth password\r\n')
