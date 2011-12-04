@@ -129,6 +129,10 @@ def get_http(url, timeout=3, data=35536):
         # Read only first 35536 bytes, speeds up a lot. Set timeout to 3 secs
         page = ''.join(urllib2.urlopen(req, timeout=timeout).read(data))
         return page
+    
+    except socket.timeout, e:
+        print e
+        return u''
         
     # Errors like 404 Not Found.
     except urllib2.HTTPError,e:
