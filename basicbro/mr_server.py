@@ -77,13 +77,25 @@ WEBMSG [receiver] [sender] [message]
     
     
     e.g WEBMSG #luola kimbledon Example message to be sent to #luola-channel\r\n
+
+
+TOPIC [channel]
+
+    Get channel's topic.
+        
+    regex: '^.{1,40}$'
+    [channel] Channel's name.
+    Replys: 210
     
+    
+    e.g TOPIC #luola\r\n
+        
     
 RECONNECT
 
     Reconnects bot.
     
-    e.g RECONNECT
+    e.g RECONNECT\r\n
 """
 
 
@@ -105,7 +117,7 @@ msgs = {
     '002': '002 Auth ok.',
     '003': '003 Done.',
     '004': '004 [channel] [nick]',
-    '005': '005 Reconnecting',
+    '005': '005 [channel] [topic],
     
     '201': '201 Already authed.',
     '202': '202 Wrong password.',
@@ -248,8 +260,12 @@ class MrServer(object):
         
         elif isinstance(data, str): # One line.
                 
-                obj.write(data + '\r\n')
+            obj.write(data + '\r\n')
         
+        elif isinstance(data, unicode):
+            
+            obj.write(data.encode('UTF-8') + '\r\n')
+            
         else:
             raise Exception, "MrServer's send() got wrong type of data."
         
@@ -290,8 +306,12 @@ class MrServer(object):
             nick = nicklist[channel][sorted_nick]
             nicks.append('004 %s %s'% (channel, nick))
         
-        # Send multiline message. 004 [nick] on each line.
-        self.send(obj, nicks)
+        for x in nicks:
+            # Send multiline message. 004 [nick] on each line.
+            print x
+            print type(x)
+            self.send(obj, x)
+            
         self.log.info("Nicklist from %s was asked."%channel)
         return
         
@@ -400,7 +420,6 @@ class MrServer(object):
             self.send(obj, msgs['208']) # OK.
             return
         
-        self.send(obj, msgs['005']) # Reconnecting
         self.bot.reconnect()
         return
 
