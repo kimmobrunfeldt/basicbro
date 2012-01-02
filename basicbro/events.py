@@ -166,10 +166,12 @@ class IrcEvents(object):
             'NICK': self.nick,
             'KICK': self.kick,
             'INVITE': self.invite,
+            'TOPIC': self.topic,
             RPL_WHOREPLY: self.rpl_whoreply,
             RPL_WELCOME: self.rpl_welcome,
             ERR_NICKNAMEINUSE: self.err_nicknameinuse,
             RPL_ENDOFMOTD: self.rpl_endofmotd,
+            RPL_TOPIC: self.rpl_topic,
             }
 
     def quit(self, prefix, cmd, args):
@@ -278,6 +280,14 @@ class IrcEvents(object):
             del self.bot.nicklist[channel][kicked_nick.lower()]
         
         # print self.bot.nicklist
+
+    def topic(self, prefix, cmd, args):
+        """Topic change"""
+        
+        topic = args[1]
+        channel = args[0].lower()
+        
+        self.bot.topics[channel] = topic
         
     def rpl_whoreply(self, prefix, cmd, args):
         """Server sent reply to WHO command"""
@@ -332,5 +342,12 @@ class IrcEvents(object):
             
             self.bot.send('NICK %s'% self.bot.sets['bot_nick'])
             self.bot.log.info('Using nick %s.'% alter)
-            
+
+    def rpl_topic(self, prefix, cmd, args):
+        """Topic"""
+        
+        topic = args[2]
+        channel = args[1].lower()
+        
+        self.bot.topics[channel] = topic            
 

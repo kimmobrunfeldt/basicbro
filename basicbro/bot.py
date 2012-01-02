@@ -54,6 +54,7 @@ class IrcBot(object):
         # cmd_dict = { <re patterobject>: <function command> }
         self.cmd_dict = {}
         self.bot_cmds = {}  # This is for !help.
+        self.topics = {}
 
         for item in commands.__all__:
             
