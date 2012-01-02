@@ -117,7 +117,7 @@ msgs = {
     '002': '002 Auth ok.',
     '003': '003 Done.',
     '004': '004 [channel] [nick]',
-    '005': '005 [channel] [topic],
+    '005': '005 [channel] [topic]',
     
     '201': '201 Already authed.',
     '202': '202 Wrong password.',
