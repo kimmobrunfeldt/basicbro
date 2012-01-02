@@ -150,6 +150,7 @@ class MrServer(object):
                     'newnick': self.newnick,
                     'nicklist': self.nicklist,
                     'reconnect': self.reconnect,
+                    'topic': self.topic,
                     }
         
         self.log = logger.Logger('MrServer',bot.sets['mr_logfile'])
