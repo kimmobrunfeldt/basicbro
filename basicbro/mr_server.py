@@ -309,8 +309,6 @@ class MrServer(object):
         
         for x in nicks:
             # Send multiline message. 004 [nick] on each line.
-            print x
-            print type(x)
             self.send(obj, x)
             
         self.log.info("Nicklist from %s was asked."%channel)
@@ -436,8 +434,8 @@ class MrServer(object):
         if not self.bot.topics.has_key(channel):
             topic = 'No topic set'        
         else:
-            topic = self.bot.topics[channel].strip().encode('utf-8')
+            topic = self.bot.topics[channel].strip()
             if len(topic) == 0:
                 topic = 'No topic set'
         
-        self.send(obj, '005 %s %s'%(channel, topic))
+        self.send(obj, '005 %s %s'%(channel.encode('utf-8'), topic.encode('utf-8')))
