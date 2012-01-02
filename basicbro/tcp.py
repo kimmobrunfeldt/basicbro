@@ -99,7 +99,7 @@ class Tcp(object):
                 data = self._socket.recv(4096)
             except socket.timeout:
                 self.bot.log.info('Connection lost..')
-                self.reconnect()
+                self.bot.reconnect()
                 
             if not data:
                 break
