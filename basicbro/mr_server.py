@@ -58,7 +58,7 @@ NICKLIST [channel]
 
 RAW [args]*
 
-    Sends everything to irvserver after "RAW ".
+    Sends everything to ircserver after "RAW ".
     USE WITH CARE!! If you mess up with raw commands, bot might confuse.
     Replys: 003, 204, 208, 209
     
@@ -423,3 +423,20 @@ class MrServer(object):
         self.bot.reconnect()
         return
 
+    def topic(self, obj, words):
+    
+        regex = re.compile('^.{1,40}$')
+        
+        if regex.match(words) is None:
+            self.send(obj, msgs['206'])
+            return
+        
+        channel = words.strip().lower()    
+        if not self.bot.topics.has_key(channel):
+            topic = 'No topic set'        
+        else:
+            topic = self.bot.topics[channel].strip().encode('utf-8')
+            if len(topic) == 0:
+                topic = 'No topic set'
+        
+        self.send(obj, '005 %s %s'%(channel, topic))
