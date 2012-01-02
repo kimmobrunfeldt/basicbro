@@ -44,10 +44,8 @@ or download zip file provided by github and extract it.
     
     - Splits overlong lines in multiple lines, default is 150 characters / line.
     
-    - Gets title of every http:// starting link in channel. Yes, it could have
-      a kilometer long regex and it would work for every friggin link, but
-      based on experience, this works better, and it does not confuse from any
-      character like those regex solutions. Bot's variable bot_say_title
+    - Gets title of every http:// and https:// starting link in channel. 
+      See regex from messages.py. Bot's variable bot_say_title
       controls this option.
 
 
