@@ -44,6 +44,21 @@ class IrcBot(object):
     """
     def __init__(self, settings, variables):
         
+        # Settings are "immutable". They are meant to be variables that can be
+        # listed for example in admin panel. They can be changed from code
+        # but not with setting command
+        self.sets = settings
+        self.sets['bot_connected'] = False
+        self.sets['bot_orig_nick'] = self.sets['bot_nick']
+        self.sets['bot_alter_nick'] = self.sets['bot_nick'] + self.sets['bot_alter_ending']
+
+        # Variables are "mutable". They can be listed but also changed via 
+        # setting command.
+        # Their type is always string, because they might be set via irc.
+        self.vars = variables
+
+        self.log = logger.Logger('Bot', self.sets['bot_logfile'])
+        
         # Every command from server is handled in events.py
         self.events = events.IrcEvents(self)
         
@@ -66,20 +81,6 @@ class IrcBot(object):
             
         self.lines = queue.Queue()
         
-        # Settings are "immutable". They are meant to be variables that can be
-        # listed for example in admin panel. They can be changed from code
-        # but not with setting command
-        self.sets = settings
-        self.sets['bot_connected'] = False
-        self.sets['bot_orig_nick'] = self.sets['bot_nick']
-        self.sets['bot_alter_nick'] = self.sets['bot_nick'] + self.sets['bot_alter_ending']
-
-        # Variables are "mutable". They can be listed but also changed via 
-        # setting command.
-        # Their type is always string, because they might be set via irc.
-        self.vars = variables
-
-        self.log = logger.Logger('Bot', self.sets['bot_logfile'])
         self.log.info('Using commands: %s' % ', '.join(commands.__all__))
 
         self.timer = None
