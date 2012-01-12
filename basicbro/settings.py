@@ -20,7 +20,7 @@ settings['bot_ping_interval'] = 200 # Interval to send own PING
 settings['bot_encoding_out'] = 'utf-8'
 settings['bot_quit_message'] = '->'
 settings['bot_tm_zone'] = 3600 * 3 # Europe/Helsinki, added to time()
-settings['bot_max_line_length'] = 150
+settings['bot_max_line_length'] = 1500
 # If default nick is already in use, add this to the default nick.
 settings['bot_alter_ending'] = 'u'
 settings['bot_reconnect_delay_on_error'] = 20
