@@ -334,42 +334,11 @@ class MrServer(object):
         sender = args[1]
         message = u' '.join(args[2:])
         
-        
         msg = self.bot.vars['mr_webirc_stamp']
         msg = msg.replace(u'%n', sender) # Put sender in place
-        
-        # From <stamp, %n> %m  remove letters %m, you get length
-        stamp_len = len(msg) - 2 
-        
         msg = msg.replace(u'%m', message) # Put message in place
         
-        
-        max_len = self.bot.sets['bot_max_line_length']
-        
-        # Intend lines nicely when max line len is exeeded.
-        if len(msg) > max_len:
-        
-            buf = msg
-            
-            msg = buf[0:max_len] # line with the stamp
-            
-            self.bot.send_msg(recv, msg) # send msg
-            
-            buf = buf[max_len:] # Chop the first sent message off
-            
-            while len(buf) > 0:
-                
-                if stamp_len + len(buf) > max_len:
-                    msg = ' ' * stamp_len + buf[0:(max_len - stamp_len)]
-                    buf = buf[max_len - stamp_len:]
-                else:
-                    msg = ' ' * stamp_len + buf
-                    buf = u''
-                
-                self.bot.send_msg(recv, msg)
-        
-        else:
-            self.bot.send_msg(recv, msg)
+        self.bot.send_msg(recv, msg)
             
         self.send(obj, msgs['003']) # OK.
         self.log.info("Webirc was used, sender: %s."%sender)
