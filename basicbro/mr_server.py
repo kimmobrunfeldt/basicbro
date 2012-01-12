@@ -89,7 +89,18 @@ TOPIC [channel]
     
     
     e.g TOPIC #luola\r\n
+
+
+ISUP [channel]
+
+    Returns OK if webirc is ready to use.
         
+    regex: '^.{1,40}$'
+    [channel] Channel's name.
+    Replys: 006, 208, 210, 212
+    
+    e.g ISUP #luola\r\n        
+    
     
 RECONNECT
 
@@ -118,6 +129,7 @@ msgs = {
     '003': '003 Done.',
     '004': '004 [channel] [nick]',
     '005': '005 [channel] [topic]',
+    '006': '006 OK.',
     
     '201': '201 Already authed.',
     '202': '202 Wrong password.',
@@ -130,6 +142,7 @@ msgs = {
     '209': '209 No parameters given.',
     '210': '210 No such channel.',
     '211': '211 Incorrect NICKLIST syntax.',
+    '212': '212 Incorrect ISUP syntax.',
     }
     
 class MrServer(object):
@@ -151,6 +164,7 @@ class MrServer(object):
                     'nicklist': self.nicklist,
                     'reconnect': self.reconnect,
                     'topic': self.topic,
+                    'isup': self.isup,
                     }
         
         self.log = logger.Logger('MrServer',bot.sets['mr_logfile'])
@@ -295,7 +309,7 @@ class MrServer(object):
         channel = words.lower().strip()
         
         if channel not in self.bot.nicklist.keys():
-            self.send(obj, msgs['210']) # Bot is not connected.
+            self.send(obj, msgs['210']) # No such channel
             return 
         
         # This speeds up(minimal), but simplifies code.
@@ -336,6 +350,7 @@ class MrServer(object):
         
         msg = self.bot.vars['mr_webirc_stamp']
         msg = msg.replace(u'%n', sender) # Put sender in place
+        
         msg = msg.replace(u'%m', message) # Put message in place
         
         self.bot.send_msg(recv, msg)
@@ -399,12 +414,36 @@ class MrServer(object):
             self.send(obj, msgs['206'])
             return
         
-        channel = words.strip().lower()    
+        channel = words.strip().lower()
+        print channel, self.bot.topics
         if not self.bot.topics.has_key(channel):
-            topic = 'No topic set'        
+            topic = 'No topic set'
+                 
         else:
             topic = self.bot.topics[channel].strip()
             if len(topic) == 0:
                 topic = 'No topic set'
         
         self.send(obj, '005 %s %s'%(channel.encode('utf-8'), topic.encode('utf-8')))
+ 
+    def isup(self, obj, words):
+        """Checks if webirc is ready to use."""
+        
+        regex = re.compile('^.{1,40}$')
+        
+        channel = words.strip().lower()
+        
+        if regex.match(words) is None:
+            self.send(obj, msgs['212'])
+            return
+            
+        if not self.bot.sets['bot_connected']:
+            self.send(obj, msgs['208']) # Bot not connected.
+            return
+            
+        if channel not in self.bot.sets['bot_channels']:
+            self.send(obj, msgs['210']) # No such channel
+            return
+                
+        self.send(obj, msgs['006'])
+        return
