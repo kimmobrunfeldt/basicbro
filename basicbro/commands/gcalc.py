@@ -9,6 +9,7 @@ import time
 import re
 import ast
 import useful
+import json
 from gevent import monkey
 
 monkey.patch_all()
@@ -64,21 +65,24 @@ class Command(object):
         try:
             print repr(answer)
             # Change "\x26" -> "&"
+            answer = answer.replace('\\x22', '&quot;')
             answer = answer.decode('string_escape')
             
             print repr(answer)
             # Replace these, then literal_eval() is possible to use
-            answer = answer.replace('lhs','"lhs"').replace('rhs','"rhs"')
-            answer = answer.replace('error','"error"').replace('icc','"icc"')
-            answer = answer.replace('true','True').replace('false','False')
+            answer = answer.replace('lhs:','"lhs":').replace('rhs:','"rhs":')
+            answer = answer.replace('error:','"error":').replace('icc:','"icc":')
+            #answer = answer.replace('true','True').replace('false','False')
+            print repr(answer)
             
             # Change it to dictionary
             # This is here, because only after this, we can decode the string
             # to unicode.
-            answer = ast.literal_eval(answer)
+            answer = json.loads(answer)
             
             oper = answer['lhs'] # Operation as understood
             result = answer['rhs'] # Result of calculation
+            error = answer['error'].replace('&quot;', '"')
             
             # Change it to unicode.
             oper = useful.uni(oper)
@@ -96,20 +100,21 @@ class Command(object):
             # rhs = answer
             # error = error
         except ValueError:
+            raise
             self.bot.send_msg(out, "Google has changed their calculator.")
-            self.log.error([u'Google has changed calculator', answer, expr])
+            self.bot.log.error([u'Google has changed calculator', answer, expr])
             return
 
         except SyntaxError:
-
+            raise
             if len(answer) == 0: # Empty string->decode was not success
                 self.bot.send_msg(out, "Problem with decoding.")
-                self.log.error(['Problem with decoding!', answer, expr])
+                self.bot.log.error(['Problem with decoding!', answer, expr])
             else:
                 raise
             
-        if len(answer['error']) > 0:
-            self.bot.send_msg(out, "Operation was not understood.")
+        if len(error) > 0:
+            self.bot.send_msg(out, "Operation was not understood. %s"%error)
             return
         
         # Send out the answer    
